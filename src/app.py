@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import plotly.express as px
+import gdown
 from data_cleaning import load_cotton_data, load_weather_data
 from analysis import (
     analyze_seasonal_trends,
@@ -27,14 +28,21 @@ from visualization import (
 )
 
 # Diretório base ajustado
-#BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-#DATA_DIR = os.path.join(BASE_DIR, "data", "raw")
-#GEO_DIR = os.path.join(BASE_DIR, "data", "geo")
-
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATA_DIR = BASE_DIR
 GEO_DIR = BASE_DIR
 
+# ID do arquivo do Google Drive (weather_sum_all.csv)
+WEATHER_FILE_ID = "14wLGIxR1u1_XzRNFK5YQBLR0bQz8m15e"
+weather_data_path = os.path.join(DATA_DIR, "weather_sum_all.csv")
+
+# Função para baixar e carregar os dados de clima
+@st.cache_data
+def download_and_load_weather(file_id, output_path):
+    if not os.path.exists(output_path):  # Baixa apenas se o arquivo não existir
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, output_path, quiet=False)
+    return load_weather_data(output_path)
 
 # Configuração inicial da página
 st.set_page_config(page_title="Análise de Algodão no Brasil", layout="wide")
@@ -51,13 +59,11 @@ st.markdown(
 # Carregar dados
 st.sidebar.header("Carregar Dados")
 try:
-    #cotton_data_path = os.path.join(DATA_DIR, "AlgodoSerieHist.xlsx")
-    #weather_data_path = os.path.join(DATA_DIR, "weather_sum_all.csv")
     cotton_data_path = os.path.join(DATA_DIR, "AlgodoSerieHist.xlsx")
-    weather_data_path = os.path.join(DATA_DIR, "weather_sum_all.csv")
-
+    
+    # Carrega os dados
     cotton_data = load_cotton_data(cotton_data_path)
-    weather_data = load_weather_data(weather_data_path)
+    weather_data = download_and_load_weather(WEATHER_FILE_ID, weather_data_path)
 
     st.sidebar.success("Dados carregados com sucesso!")
 except Exception as e:
