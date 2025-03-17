@@ -28,6 +28,7 @@ from visualization import (
 
 # Diretório base ajustado
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+dir_path = os.path.dirname(os.path.realpath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data", "raw")
 GEO_DIR = os.path.join(BASE_DIR, "data", "geo")
 
@@ -47,8 +48,10 @@ st.markdown(
 # Carregar dados
 st.sidebar.header("Carregar Dados")
 try:
-    cotton_data_path = os.path.join(DATA_DIR, "AlgodoSerieHist.xlsx")
-    weather_data_path = os.path.join(DATA_DIR, "weather_sum_all.csv")
+    #cotton_data_path = os.path.join(DATA_DIR, "AlgodoSerieHist.xlsx")
+    #weather_data_path = os.path.join(DATA_DIR, "weather_sum_all.csv")
+    cotton_data_path = load_data(dir_path + "/data/AlgodoSerieHist.xlsx").reset_index(drop=True)
+    weather_data_path = load_data(dir_path + "/data/weather_sum_all.csv").reset_index(drop=True)
 
     cotton_data = load_cotton_data(cotton_data_path)
     weather_data = load_weather_data(weather_data_path)
