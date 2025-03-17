@@ -7,3 +7,5 @@ scikit-learn==1.4.0
 geopandas==1.0.1
 folium==0.18.0
 streamlit-folium==0.23.2
+deap==1.4.2
+plotly_express==0.4.0
