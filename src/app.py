@@ -27,13 +27,14 @@ from visualization import (
 )
 
 # Diretório base ajustado
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA_DIR = os.path.join(BASE_DIR, "data", "raw")
-GEO_DIR = os.path.join(BASE_DIR, "data", "geo")
+#BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+#DATA_DIR = os.path.join(BASE_DIR, "data", "raw")
+#GEO_DIR = os.path.join(BASE_DIR, "data", "geo")
 
-print(BASE_DIR)
-print(DATA_DIR)
-print(GEO_DIR)
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATA_DIR = BASE_DIR
+GEO_DIR = BASE_DIR
+
 
 # Configuração inicial da página
 st.set_page_config(page_title="Análise de Algodão no Brasil", layout="wide")
@@ -50,6 +51,8 @@ st.markdown(
 # Carregar dados
 st.sidebar.header("Carregar Dados")
 try:
+    #cotton_data_path = os.path.join(DATA_DIR, "AlgodoSerieHist.xlsx")
+    #weather_data_path = os.path.join(DATA_DIR, "weather_sum_all.csv")
     cotton_data_path = os.path.join(DATA_DIR, "AlgodoSerieHist.xlsx")
     weather_data_path = os.path.join(DATA_DIR, "weather_sum_all.csv")
 
